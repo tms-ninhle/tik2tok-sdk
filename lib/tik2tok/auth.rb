@@ -39,9 +39,5 @@ module Tik2tok
     private
 
     attr_reader :config
-
-    def authorize_url
-      @config.authorize_url + "?" + URI.encode_www_form(@config.authorize_params)
-    end
   end
 end

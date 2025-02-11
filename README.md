@@ -4,7 +4,7 @@ Build SDK for Tiktok API
 ## Installation
 
 ```bash
-gem install tik2tok-sdk
+gem install tik2tok
 ```
 
 ## Usage
