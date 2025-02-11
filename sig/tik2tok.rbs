@@ -1,0 +1,4 @@
+module Tik2tok
+  VERSION: String
+  # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+end
