@@ -27,7 +27,11 @@ end
 ## Authorization
 
 ```ruby
-Tik2tok.auth.authorize
+Tik2tok.auth.authorize_url
+
+# Rails using redirect_to
+# Add allow_other_host: true to allow redirect to your own domain
+redirect_to Tik2tok.auth.authorize_url, allow_other_host: true
 ```
 
 ## Access Token

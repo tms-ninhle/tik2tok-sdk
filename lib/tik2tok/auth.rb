@@ -7,7 +7,7 @@ module Tik2tok
       @config = config
     end
 
-    def authorize
+    def authorize_url
 			uri = URI(config.authorize_url)
 			uri.query = URI.encode_www_form(config.authorize_params)
 			uri.to_s
@@ -29,15 +29,15 @@ module Tik2tok
       raise "Request failed: #{e.message}"
     end
 
-    def headers
+    private
+
+    attr_reader :config
+
+		def headers
       {
         "Content-Type" => "application/x-www-form-urlencoded",
         "Cache-Control" => "no-cache"
       }
     end
-
-    private
-
-    attr_reader :config
   end
 end
