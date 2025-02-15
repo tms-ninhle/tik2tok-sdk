@@ -4,5 +4,3 @@ source "https://rubygems.org"
 
 # Specify your gem's dependencies in tik2tok.gemspec
 gemspec
-
-gem "rake", "~> 13.0"
