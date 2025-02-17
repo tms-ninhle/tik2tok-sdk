@@ -20,11 +20,14 @@ module Tik2tok
       raise "Request failed: #{e.message}"
     end
 
-    def publish(source)
+    def publish(source, caption = nil)
+      post_info = { privacy_level: "PUBLIC_TO_EVERYONE" }
+      post_info[:title] = caption if caption
+
       if is_url?(source)
-        handle_publish_video_from_url(source)
+        handle_publish_video_from_url(source, post_info)
       elsif is_path?(source)
-        handle_publish_video_from_local(source)
+        handle_publish_video_from_local(source, post_info)
       else
         raise "Video not found. Video is `video url` or `path to video`"
       end
@@ -62,8 +65,10 @@ module Tik2tok
       "https://open.tiktokapis.com/v2/video/list/?fields=#{fields}"
     end
 
-    def handle_publish_video_from_url(source)
-      payload = { source_info: {
+    def handle_publish_video_from_url(source, post_info = {})
+      payload = {
+        post_info: post_info,
+        source_info: {
           source: "PULL_FROM_URL",
           video_url: source
         }
@@ -76,7 +81,7 @@ module Tik2tok
       raise "Request failed: #{e.message}"
     end
 
-    def handle_publish_video_from_local(source)
+    def handle_publish_video_from_local(source, post_info = {})
       content_type = get_content_type(source)
 
       raise "Unable to determine content type for file: #{source}" if content_type.nil? || content_type.empty?
@@ -91,6 +96,7 @@ module Tik2tok
       chunk_size = video_size if chunk_size < min_chunk_size
       total_chunk_count = (video_size.to_f / chunk_size).ceil
       payload = {
+        post_info: post_info,
         source_info: {
           source: "FILE_UPLOAD",
           video_size: video_size,
